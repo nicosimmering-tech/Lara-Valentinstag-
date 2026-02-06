@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Für Lara 💕</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ff4d88;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 192, 203, 0.15);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      max-width: 440px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(255, 77, 136, 0.25);
+      animation: fadeIn 1.2s ease-out;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: #ff5f9e;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: #ff5f9e;
+      color: #fff;
+      border: none;
+      padding: 0.9rem 1.6rem;
+      font-size: 1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 20px rgba(255, 77, 136, 0.3);
+    }
+
+    button:hover {
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    .no {
+      background: #ffd1e3;
+      color: #ff4d88;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .hearts {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      color: #ff5f9e;
+      font-size: 1.2rem;
+      animation: floatUp linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(110vh) scale(0.8);
+        opacity: 0;
+      }
+      10% { opacity: 1; }
+      to {
+        transform: translateY(-10vh) scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes explode {
+      from {
+        transform: translate(0, 0) scale(0.5);
+        opacity: 1;
+      }
+      to {
+        transform: translate(var(--x), var(--y)) scale(1.4);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        margin: 1rem;
+        padding: 2.2rem 1.6rem;
+      }
+
+      h1 {
+        font-size: 1.9rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      button {
+        font-size: 0.95rem;
+        padding: 0.8rem 1.4rem;
+      }
+    }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="hearts" id="hearts"></div>
+
+  <div class="card" id="question">
+    <h1>Lara 💕</h1>
+    <p>
+      Willst du mein Valentinstag sein,<br />
+      <strong>mein Engel?</strong> 💘
+    </p>
+    <div class="buttons">
+      <button id="yesBtn" onclick="yesAnswer()">Ja 💖</button>
+      <button class="no" onclick="noAnswer()">Nein 🙈</button>
+    </div>
+  </div>
+
+      <div class="card hidden" id="yes">
+    <h1>💞 Yey! 💞</h1>
+    <p>
+      Ich liebe dich vom ganzen Herzen 💖<br />
+      ich will noch viele weitere Valentinstage mit dir verbringen 💖
+    </p>
+  </div>
+
+      
+
+  <script>
+    const heartsContainer = document.getElementById('hearts');
+    const yesBtn = document.getElementById('yesBtn');
+    const yeySound = document.getElementById('yeySound');
+    let yesScale = 1;
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = '💗';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = 14 + Math.random() * 20 + 'px';
+      heart.style.animationDuration = 5 + Math.random() * 5 + 's';
+      heartsContainer.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 10000);
+    }
+
+    setInterval(createHeart, 350);
+
+    function noAnswer() {
+      yesScale += 0.2;
+      yesBtn.style.transform = `scale(${yesScale})`;
+      yesBtn.textContent = 'Ja 💖 (komm schon 😌)';
+    }
+
+                function yesAnswer() {
+      document.getElementById('question').classList.add('hidden');
+      document.getElementById('yes').classList.remove('hidden');
+      explodeHearts();
+    }
+
+    function explodeHearts() {
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = '💖';
+        heart.style.left = '50vw';
+        heart.style.top = '50vh';
+        heart.style.position = 'fixed';
+        heart.style.fontSize = 16 + Math.random() * 24 + 'px';
+        heart.style.animation = 'explode 1.2s ease-out forwards';
+        heart.style.setProperty('--x', (Math.random() * 300 - 150) + 'px');
+        heart.style.setProperty('--y', (Math.random() * -300) + 'px');
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1300);
+      }
+    }
+  </script>
+</body>
+</html>
